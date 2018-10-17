@@ -1,0 +1,19 @@
+---
+
+- name: MARIADB INSTALL | Manage repository
+  yum_repository:
+    name: mariadb
+    description: MariaDB YUM repository
+    baseurl: "{{ mariadb_yum_repository }}"
+    gpgkey: "{{ mariadb_yum_key }}"
+    gpgcheck: yes
+  when: ansible_os_family == 'RedHat'
+
+- name: MARIADB INSTALL | Installation
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - mariadb-server
+    - "{{ mariadb_dependency_package }}"
+  notify: Restart mariadb

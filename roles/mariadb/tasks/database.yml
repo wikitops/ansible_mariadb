@@ -1,0 +1,9 @@
+---
+
+- name: MARIADB DATABASE | Manage databases
+  mysql_db:
+    name: "{{ item.name }}"
+    login_user: "{{ mariadb_user_root.name }}"
+    login_password: "{{ mariadb_user_root.password }}"
+    state: "{{ item.state }}"
+  with_items: "{{ mariadb_databases }}"

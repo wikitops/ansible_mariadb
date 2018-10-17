@@ -1,0 +1,13 @@
+---
+
+- name: MARIADB USER | Manage database users
+  mysql_user:
+    name: "{{ item.name }}"
+    password: "{{ item.password }}"
+    host: "{{ item.host | default('localhost') }}"
+    priv: "{{ item.priv }}"
+    append_privs: "{{ item.append_privs | default('no') }}"
+    login_user: "{{ mariadb_user_root.name }}"
+    login_password: "{{ mariadb_user_root.password }}"
+    state: "{{ item.state }}"
+  with_items: "{{ mariadb_users }}"

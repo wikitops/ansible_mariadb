@@ -1,0 +1,14 @@
+---
+
+- name: MARIADB CONFIG | Template configuration files
+  template:
+    src: etc/mysql/mariadb.conf.d/{{ item }}.j2
+    dest: "{{ mariadb_conf_dir }}{{ item }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - client.cnf
+    - mysql-clients.cnf
+    - server.cnf
+  notify: Restart mariadb

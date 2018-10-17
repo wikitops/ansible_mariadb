@@ -1,0 +1,29 @@
+---
+
+- name: MARIADB SECURE | Ensure root password is set
+  shell: mysqladmin -u root status
+  changed_when: false
+  failed_when: false
+  register: root_check_access
+
+- name: MARIADB SECURE | Remove Anonymous user
+  mysql_user:
+    name: ''
+    host_all: yes
+    state: absent
+  when: root_check_access.rc == 0
+
+- name: MARIADB SECURE | Configure root password
+  mysql_user:
+    name: "{{ mariadb_user_root.name }}"
+    password: "{{ mariadb_user_root.password }}"
+    host_all : yes
+    state: present
+  when: root_check_access.rc == 0
+
+- name: MARIADB SECURE | Remove test database
+  mysql_db:
+    name: test
+    login_user: "{{ mariadb_user_root.name }}"
+    login_password: "{{ mariadb_user_root.password }}"
+    state: absent

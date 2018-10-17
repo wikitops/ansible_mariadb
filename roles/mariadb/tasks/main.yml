@@ -1,0 +1,34 @@
+---
+
+- name: MARIADE | Gather OS specific variables
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: MARIADB | Manage installation
+  import_tasks: install.yml
+  tags: update-mariadb
+
+- name: MARIADB | Manage configuration
+  import_tasks: config.yml
+  tags:
+    - update-mariadb
+    - update-mariadb-config
+
+- name: MARIADB | Secure installation
+  import_tasks: secure.yml
+  tags:
+    - update-mariadb
+    - update-mariadb-secure
+
+- name: MARIADB | Manage databases
+  import_tasks: database.yml
+  when: mariadb_databases != ""
+  tags:
+    - update-mariadb
+    - update-mariadb-database
+
+- name: MARIADB | Manage users
+  import_tasks: user.yml
+  when: mariadb_users != ""
+  tags:
+    - update-mariadb
+    - update-mariadb-user

@@ -1,0 +1,15 @@
+---
+
+###
+# MARIADB REDHAT
+###
+
+# Dependency
+mariadb_dependency_package: MySQL-python
+
+# Configureation directory
+mariadb_conf_dir: /etc/my.cnf.d/
+
+# MariaDB socket path
+mariadb_pid_path: /var/lib/mysql/{{ ansible_hostname }}.pid
+mariadb_socket_path: /var/lib/mysql/mysql.sock

@@ -1,0 +1,33 @@
+---
+
+###
+# MARIADB
+###
+
+# Version
+mariadb_major_version: 10.1
+mariadb_minor_version: 34
+mariadb_version: "{{ mariadb_major_version }}.{{ mariadb_minor_version }}"
+
+# RedHat
+mariadb_yum_repository: http://yum.mariadb.org/{{ mariadb_major_version }}/{{ ansible_distribution|lower|regex_replace('redhat', 'rhel') }}{{ ansible_distribution_major_version }}-amd64
+mariadb_yum_key: https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+
+# User Root
+mariadb_user_root:
+  name: root
+  password: mariadb10
+
+# Database
+mariadb_databases: 
+  - name: wikitops
+    state: present
+
+# Database User
+mariadb_users:
+  - name: wikitops
+    password: wikitops
+    host: localhost
+    priv: "wikitops.*:ALL"
+    append_privs: no
+    state: present

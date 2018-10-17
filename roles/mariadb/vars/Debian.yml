@@ -1,0 +1,18 @@
+---
+
+###
+# MARIADB DEBIAN
+###
+
+# Dependency
+mariadb_dependency_package: python-mysqldb
+
+# configuration file prefix
+mariadb_conf_file_prefix: "50-"
+
+# Configureation directory
+mariadb_conf_dir: /etc/mysql/mariadb.conf.d/{{ mariadb_conf_file_prefix }}
+
+# MariaDB socket and PID path
+mariadb_pid_path: /var/run/mysqld/mysqld.pid
+mariadb_socket_path: /var/run/mysqld/mysqld.sock
